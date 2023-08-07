@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Poppins', sans-serif;
+}
+
+body {
+   height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding: 10px;
+   background: linear-gradient(135deg, #71b7e6, #9b59b6);
+   animation: gradient 15s ease infinite;
+   background-size: 200% 200%;
+}
+
+a {
+   text-decoration: none;
+}
+
+a:hover {
+   text-decoration: underline;
+}
+
+@keyframes gradient {
+   0% {
+      background-position: 0% 50%;
+   }
+
+   50% {
+      background-position: 100% 50%;
+   }
+
+   100% {
+      background-position: 0% 50%;
+   }
+}
+
+.container {
+   max-width: 700px;
+   width: 100%;
+   background-color: #fff;
+   padding: 25px 30px;
+   border-radius: 7px;
+   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.container .title {
+
+   font-size: 25px;
+
+   position: relative;
+}
+
+.container .title::before {
+   content: "";
+   position: absolute;
+   margin-left: auto;
+   margin-right: auto;
+   left: 5;
+   bottom: 0;
+   height: 3px;
+   width: 30px;
+   border-radius: 5px;
+   background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+
+.container form .details {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+   margin: 20px 0 12px 0;
+}
+
+.error {
+   color: red;
+}
+
+form .btn {
+   height: 100%;
+   width: 100%;
+   margin: 2px;
+   border-radius: 5px;
+   border: none;
+   color: #fff;
+   font-size: 18px;
+   font-weight: 500;
+   letter-spacing: 1px;
+   cursor: pointer;
+   transition: all 12s ease;
+   /* background: linear-gradient(135deg, #71b7e6, #9b59b6); */
+   background: linear-gradient(-135deg, #c850c0, #4158d0);
+}
+
+form .btn:hover {
+   background: linear-gradient(90deg, #71b7e6, #b335aa);
+
+}
+
+.details .input-box {
+   margin-bottom: 15px;
+   position: relative;
+   width: calc(100% / 2 - 20px);
+}
+p{
+    color: red;
+}
+.details .input-box .bi {
+   position: absolute;
+   left: 15px;
+   top: 40px;
+   color: gray;
+}
+
+.details .input-box input {
+   height: 45px;
+   width: 100%;
+   outline: none;
+   font-size: 16px;
+   border-radius: 5px;
+   padding-left: 15px;
+   border: 1px solid #ccc;
+   border-bottom-width: 2px;
+   transition: all 0.3s ease;
+}
