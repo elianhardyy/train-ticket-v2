@@ -42,6 +42,7 @@
             </div>
             @else
             @include('partial.navbar-cust')
+            
             <div class="container mt-3">
                 @yield('customer')
             </div>
@@ -50,7 +51,6 @@
     @endauth
    
         <div>
-           
             @yield('auth')
         </div>
         

@@ -34,12 +34,12 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="">Dewasa</label>
-                            <input type="number" name="cat_dewasa" id="" class="form-control">
+                            <input type="number" name="dewasa" id="" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="">Anak</label>
                             <br>
-                            <input type="number" name="cat_anak" id="" class="form-control">
+                            <input type="number" name="anak" id="" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
             <br>
             
             <input type="hidden" name="id_users" value="{{ auth()->user()->id }}">
-            <button name="pesan" class="btn btn-primary">Pesan</button>
+            <button type="submit" class="btn btn-primary">Pesan</button>
         </form>
 
   

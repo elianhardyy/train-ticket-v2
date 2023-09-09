@@ -78,7 +78,7 @@ class StasiunKeretaController extends Controller
         
         $berangkat = $request->input('idberangkat');
         $tujuan = $request->input('idtujuan');
-        $dewasa = $request->input('cat_dewasa');
+        $dewasa = $request->input('dewasa');
         $anak = $request->input('anak');
         $dateorder = $request->input('tanggal_pesan');
         $category = $request->input('kategori');

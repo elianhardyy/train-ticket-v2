@@ -33,7 +33,6 @@ class PenumpangController extends Controller
         $penumpang = $request->validate([
             "dewasa"=>"required",
             "anak"=>"required",
-            "kategori"=>"required",
             "tanggal_pesan"=>"required",
             "users_id"=>"required",
             "stasiun_kereta_id"=>"required",
@@ -66,7 +65,7 @@ class PenumpangController extends Controller
         "randomGerbongOthers"=>$randomGerbongOthers,
         "randomHurufOthers"=>$substrcharOthers
     ]);
-        //id user,id stasiun_kereta/id penumpang
+        
     }
 }
 // function randomNum()

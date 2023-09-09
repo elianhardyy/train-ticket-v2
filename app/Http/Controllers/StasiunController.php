@@ -49,5 +49,4 @@ class StasiunController extends Controller
         $stasiun = Stasiun::all();
         return view('customer.home',["title"=>"Customer","stasiun"=>$stasiun]);
     }
-    
 }
