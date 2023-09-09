@@ -74,16 +74,17 @@ class StasiunKeretaController extends Controller
     //customer
     public function pemberhentian(Request $request)
     {
-        $method = $request->method();
+        
         
         $berangkat = $request->input('idberangkat');
         $tujuan = $request->input('idtujuan');
-        $pass = $request->input('penumpang');
+        $dewasa = $request->input('cat_dewasa');
+        $anak = $request->input('anak');
         $dateorder = $request->input('tanggal_pesan');
         $category = $request->input('kategori');
         $pem = StasiunKereta::with('kereta')->with('stasiunTo')->with('stasiunFrom')->where('stasiun_from_id',$berangkat)->where('stasiun_to_id',$tujuan)->get();
         $tujuanonly = StasiunKereta::with('kereta')->with('stasiunTo')->where('stasiun_to_id',$tujuan)->first();
-        return view('customer.pemberhentian',["title"=>"Pilih Kereta","pem"=>$pem,"tujuan"=>$tujuan,"tujuanonly"=>$tujuanonly,"pass"=> $pass,"dateorder"=>$dateorder,"category"=>$category]);
+        return view('customer.pemberhentian',["title"=>"Pilih Kereta","pem"=>$pem,"tujuan"=>$tujuan,"tujuanonly"=>$tujuanonly,"pass"=> $dewasa,"dateorder"=>$dateorder,"category"=>$category,"anak"=>$anak]);
              
     }
 

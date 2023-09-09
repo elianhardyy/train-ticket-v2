@@ -19,7 +19,10 @@
             </ul>
             <ul class="navbar-nav">
 
-                <a class="nav-link justify-content" href="../logout.php"><i class="bi bi-box-arrow-left"></i>Log out</a>
+                <form action="{{ route('logout') }}" method="post" class="nav-link justify-content">
+                    @csrf
+                    <i class="bi bi-box-arrow-left"></i><button type="submit">Logout</button>
+                    </form>
 
             </ul>
 

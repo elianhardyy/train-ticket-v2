@@ -21,39 +21,35 @@
                         @foreach ($stasiun as $s)
                         <option value="{{ $s->id }}">{{ $s->nama_stasiun }}</option>
                         @endforeach
-                    
                     </select>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <label for="penumpang">Jumlah Penumpang</label><br>
-                    <input type="number" name="penumpang" class="form-control" id="penumpang">
-                </div>
+                
                 <div class="col-md-6">
                     <label for="tanggal">Tanggal</label><br>
                     <input type="date" name="tanggal_pesan" class="form-control">
                 </div>
-
-            </div>
-            <div class="row">
                 <div class="col-md-6">
-                    <label for="kategori">Kategori</label><br>
-                    <select class="form-select category" aria-label="Default select example" name="kategori">
-                    <option selected>----- Pilih Jenis Penumpang -----</option>
-                    <option value="A">Anak</option>
-                    <option value="D">Dewasa</option>
-                </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="">Dewasa</label>
+                            <input type="number" name="cat_dewasa" id="" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Anak</label>
+                            <br>
+                            <input type="number" name="cat_anak" id="" class="form-control">
+                        </div>
+                    </div>
                 </div>
             </div>
+            
             <br>
-            <h1>ipois</h1>
+            
             <input type="hidden" name="id_users" value="{{ auth()->user()->id }}">
             <button name="pesan" class="btn btn-primary">Pesan</button>
         </form>
 
-  <form action="{{ route('logout') }}" method="post">
-        @csrf
-        <button type="submit">Logout</button>
-    </form>
+  
 @endsection

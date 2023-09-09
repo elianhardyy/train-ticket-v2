@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('penumpangs', function (Blueprint $table) {
             $table->id();
-            $table->string('penumpang');
-            $table->string('kategori');
             $table->date('tanggal_pesan');
+            $table->string('dewasa');
+            $table->string('anak');
             $table->unsignedBigInteger('users_id');
             $table->unsignedBigInteger('stasiun_kereta_id');
             $table->unsignedBigInteger('kereta_id');

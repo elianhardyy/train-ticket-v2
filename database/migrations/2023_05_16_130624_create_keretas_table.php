@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_kereta');
             $table->string('kelas');
+            $table->string('slug');
             $table->integer('harga')->max(11);
             $table->unsignedBigInteger('stasiun_from_id');
             $table->time('jam_berangkat');

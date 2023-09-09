@@ -15,35 +15,32 @@ class StasiunSeeder extends Seeder
     {
         Stasiun::create([
             "nama_stasiun"=>"Mojokerto",
-            "slug_stasiun"=>"MR",
-        ]);
+                    ]);
         Stasiun::create([
             "nama_stasiun"=>"Surabaya Kota",
-            "slug_stasiun"=>"SB",
-        ]);
+                    ]);
         Stasiun::create([
             "nama_stasiun"=>"Surabaya Gubeng",
-            "slug_stasiun"=>"SGU",
+
         ]);
         Stasiun::create([
             "nama_stasiun"=>"Wonokromo",
-            "slug_stasiun"=>"WO",
-        ]);
+                    ]);
         Stasiun::create([
             "nama_stasiun"=>"Sepanjang",
-            "slug_stasiun"=>"SPJ",
+
         ]);
         Stasiun::create([
             "nama_stasiun"=>"Boharan",
-            "slug_stasiun"=>"BOH",
+
         ]);
         Stasiun::create([
             "nama_stasiun"=>"Kedinding",
-            "slug_stasiun"=>"KDG",
+
         ]);
         Stasiun::create([
             "nama_stasiun"=>"Gambir",
-            "slug_stasiun"=>"GMR",
+
         ]);
     }
 }

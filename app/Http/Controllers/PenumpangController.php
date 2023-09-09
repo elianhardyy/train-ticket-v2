@@ -31,14 +31,15 @@ class PenumpangController extends Controller
     public function penumpang(Request $request)
     {
         $penumpang = $request->validate([
-            "penumpang"=>"required",
+            "dewasa"=>"required",
+            "anak"=>"required",
             "kategori"=>"required",
             "tanggal_pesan"=>"required",
             "users_id"=>"required",
             "stasiun_kereta_id"=>"required",
             "kereta_id"=>"required"
         ]);
-        $jumpenumpang = $penumpang['penumpang'];
+        $jumpenumpang = $penumpang['dewasa'];
         Penumpang::create($penumpang);
         $characters = 'ABCDE';
         $randomNum = rand(1,24);

@@ -41,8 +41,8 @@
                 </div>
             </div>
             @else
-            @include('partial.lala')
-            <div class="container">
+            @include('partial.navbar-cust')
+            <div class="container mt-3">
                 @yield('customer')
             </div>
             @endif 

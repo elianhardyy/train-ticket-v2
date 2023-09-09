@@ -190,7 +190,7 @@
                           <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard1"><a class="dropdown-item py-1 px-3 remove" href="#"> <i class="fas fa-times"></i>Close</a><a class="dropdown-item py-1 px-3 edit" href="#"> <i class="fas fa-cog"></i>Edit</a></div>
                         </div>
                       </div>
-                      <h3 class="h4 mb-0">Jadwal Kereta Api</h3>
+                      <h3 class="h4 mb-0">Data Penumpang Online</h3>
                       <br>
                       <button class="btn btn-primary" type="button" data-bs-target="#myModal" data-bs-toggle="modal">Tambah Kereta</button>
                       
@@ -230,9 +230,7 @@
                               <td>{{ $p->kereta->kelas }}</td>
                               <td>Rp {{ number_format($p->kereta->harga) }}</td>
                               <td>{{ $p->created_at }}</td>
-                              <td><a href="/pemesanan/{{ $p->id }}" class="badge bg-danger">detail</a></td>
-                              
-                              
+                              <td><a href="/pemesanan/{{ $p->id }}" class="badge bg-danger">detail</a></td>    
                             </tr>
                             @endforeach
                            
@@ -246,12 +244,8 @@
              
             </div>
           </section>
-        
           <section class="tables">   
             <div class="container-fluid">
-             
-              
-                
                   <div class="card mb-0">
                     <div class="card-header">
                       <div class="card-close">
@@ -260,17 +254,10 @@
                           <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard1"><a class="dropdown-item py-1 px-3 remove" href="#"> <i class="fas fa-times"></i>Close</a><a class="dropdown-item py-1 px-3 edit" href="#"> <i class="fas fa-cog"></i>Edit</a></div>
                         </div>
                       </div>
-                      <h3 class="h4 mb-0">Jadwal Kereta Api</h3>
+                      <h3 class="h4 mb-0">Data Penumpang Online</h3>
                       <br>
                       <button class="btn btn-primary" type="button" data-bs-target="#myModal" data-bs-toggle="modal">Tambah Kereta</button>
                       
-                      @if ($message = Session::get('success'))
-                      <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ $message }}
-                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                      </div>
-                        
-                      @endif
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">
@@ -289,26 +276,21 @@
                             </tr>
                           </thead>
                           <tbody>
-                            @php
-                              $no = 1;
-                            @endphp
-                            @foreach ($passoffline as $p )
-                            <tr>
-                              <th scope="row">{{ $no++ }}</th>
-                              <td>{{ $p->nama }}</td>
-                              <td>{{ $p->nik }}</td>
-                              <td>{{ $p->gerbong }}</td>
-                              <td>{{ $p->kursi }}</td>
-                              <td>{{ $p->kereta->kelas }}</td>
-                              <td>Rp {{ number_format($p->kereta->harga) }}</td>
-                              <td>{{ $p->created_at }}</td>
-                              <td><a href="/pemesanan/{{ $p->id }}" class="badge bg-danger">detail</a></td>
-                              
-                              
-                            </tr>
-                            @endforeach
-                           
-                          
+                              @php
+                                $no=1;
+                              @endphp
+                              @foreach ($passoffline as $p)
+                                <tr>
+                                  <td>{{ $p->nama }}</td>
+                                  <td>{{ $p->nik }}</td>
+                                  <td>{{ $p->gerbong }}</td>
+                                  <td>{{ $p->kursi }}</td>
+                                  <td>{{ $p->kereta->kelas }}</td>
+                                  <td>Rp {{ number_format($p->kereta->harga) }}</td>
+                                  <td>{{ $p->created_at }}</td>
+                                  <td><a href="/pemesanan/{{ $p->id }}" class="badge bg-danger">detail</a></td>
+                                </tr>
+                              @endforeach
                           </tbody>
                         </table>
                       </div>
@@ -318,7 +300,7 @@
              
             </div>
           </section>
-
+          
 @endsection
 @push('js_scripts')
 @if (count($errors)>0)

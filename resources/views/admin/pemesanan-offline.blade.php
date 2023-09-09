@@ -27,7 +27,7 @@
                       <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard1"><a class="dropdown-item py-1 px-3 remove" href="#"> <i class="fas fa-times"></i>Close</a><a class="dropdown-item py-1 px-3 edit" href="#"> <i class="fas fa-cog"></i>Edit</a></div>
                     </div>
                   </div>
-                  <h3 class="h4 mb-0">Horizontal Form</h3>
+                  <h3 class="h4 mb-0">Pembelian Tiket Offline</h3>
                 </div>
                 <div class="card-body">
                   <p class="text-sm">Lorem ipsum dolor sit amet consectetur.</p>
