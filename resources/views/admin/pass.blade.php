@@ -208,12 +208,14 @@
                           <thead>
                             <tr>
                               <th>No</th>
+                              <th>Nama Pemesan</th>
                               <th>Nama Kereta</th>
                               <th>Kelas</th>
                               <th>Harga</th>
                               <th>Berangkat</th>
                               <th>Tujuan</th>
-                              <th>Tujuan</th>
+                              <th>Waktu Pesan</th>
+                              <th>Waktu Beli</th>
                               <th>Aksi</th>
                             </tr>
                           </thead>
@@ -224,11 +226,13 @@
                             @foreach ($pass as $p )
                             <tr>
                               <th scope="row">{{ $no++ }}</th>
-                              <td>{{ $p->user->name }}</td>
-                              <td>{{ $p->penumpang }}</td>
-                              <td>{{ $p->kategori }}</td>
+                              <td>{{ $p->user->first_name }} {{ $p->user->last_name }}</td>
+                              <td>{{ $p->kereta->nama_kereta }}</td>
                               <td>{{ $p->kereta->kelas }}</td>
                               <td>Rp {{ number_format($p->kereta->harga) }}</td>
+                              <td>{{ $p->stasiunkereta->stasiunFrom->nama_stasiun }}</td>
+                              <td>{{ $p->stasiunkereta->stasiunTo->nama_stasiun }}</td>
+                              <td>{{ $p->tanggal_pesan }}</td>
                               <td>{{ $p->created_at }}</td>
                               <td><a href="/pemesanan/{{ $p->id }}" class="badge bg-danger">detail</a></td>    
                             </tr>
@@ -281,6 +285,7 @@
                               @endphp
                               @foreach ($passoffline as $p)
                                 <tr>
+                                  <td>{{ $no }}</td>
                                   <td>{{ $p->nama }}</td>
                                   <td>{{ $p->nik }}</td>
                                   <td>{{ $p->gerbong }}</td>

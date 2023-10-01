@@ -16,7 +16,7 @@ class Stasiun extends Model
     {
         return[
             'slug'=>[
-                'sources'=>'slug_stasiun'
+                'source'=>'nama_stasiun'
             ]
         ];
     }

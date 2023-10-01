@@ -87,19 +87,11 @@
                   </ul>
                 </li>
                 <!-- Languages dropdown    -->
-                <li class="nav-item dropdown"><a class="nav-link text-white dropdown-toggle d-flex align-items-center" id="languages" href="#" data-bs-toggle="dropdown" aria-expanded="false"><img class="me-2" src="img/flags/16/GB.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
-                  <ul class="dropdown-menu dropdown-menu-end mt-3 shadow-sm" aria-labelledby="languages">
-                    <li><a class="dropdown-item" rel="nofollow" href="#"> <img class="me-2" src="img/flags/16/DE.png" alt="English"><span class="text-xs text-gray-700">German</span></a></li>
-                    <li><a class="dropdown-item" rel="nofollow" href="#"> <img class="me-2" src="img/flags/16/FR.png" alt="English"><span class="text-xs text-gray-700">French                                         </span></a></li>
-                  </ul>
-                </li>
+                
                 <!-- Logout    -->
                 <form action="{{ route('logout') }}" method="post">
                   @csrf
-                <li class="nav-item"><button type="submit" class="nav-link text-white"> <span class="d-none d-sm-inline">Logout</span>
-                    <svg class="svg-icon svg-icon-xs svg-icon-heavy">
-                      <use xlink:href="#security-1"> </use>
-                    </svg></button></li>
+                <li class="nav-item"><button type="submit" class="nav-link text-white"> <span class="d-none d-sm-inline">Logout</span></button></li>
                     </form>
               </ul>
             </div>

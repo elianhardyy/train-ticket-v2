@@ -12,6 +12,6 @@ class Profile extends Model
     public $table = "profiles";
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,"users_id");
     }
 }

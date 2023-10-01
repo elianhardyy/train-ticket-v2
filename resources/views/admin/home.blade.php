@@ -1,34 +1,26 @@
 @extends('layout.app')
-@push('js_scripts')
 
-<script>
-  $('.delete_confirm').click(function(event){
-    var form = $(this).closest("form");
-    event.preventDefault();
-    swal.fire({
-      title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-    }) .then((result) => {
-            if (result.isConfirmed) {
-                form.submit();
-                Swal.fire(
-                'Deleted!',
-                'Your data has been deleted.',
-                'success'
-                )
-            }
-      })
-  })
- 
- 
-</script>
-@endpush
+<style>
+  .error{
+    color: red;
+  }
+</style>
 @section('content')
+@if (count($errors)>0)
+<script>
+      $(document).ready(function(){
+        $('#myModal').modal('show')
+      });
+    </script>
+@endif
+@if (count($errors)>0)
+<script>
+      $(document).ready(function(){
+
+      $('#myModal'+this).modal('show')
+      });
+    </script>
+@endif
 <header class="bg-white shadow-sm px-4 py-3 z-index-20">
             <div class="container-fluid px-0">
               <h2 class="mb-0 p-1">Daftar Kereta</h2>
@@ -63,46 +55,66 @@
                                     is-invalid
                                   @enderror" id="modalInputEmail1" type="text" name="nama_kereta">
                                   @error('nama_kereta')
-                                    <p>{{ $message }}</p>
+                                    <p class="error">{{ $message }}</p>
                                   @enderror
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label" for="modalInputEmail1">Kelas</label>
-                                  <input class="form-control" id="modalInputEmail1" type="text" name="kelas">
-                                  
+                                  <input class="form-control @error('kelas')
+                                  @enderror" id="modalInputEmail1" type="text" name="kelas">
+                                  @error('kelas')
+                                    <p class="error">{{ $message }}</p>
+                                  @enderror
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label" for="modalInputEmail1">Harga</label>
-                                  <input class="form-control" id="modalInputEmail1" type="number" name="harga">
-                                  
+                                  <input class="form-control @error('harga')
+                                  @enderror" id="modalInputEmail1" type="number" name="harga">
+                                  @error('harga')
+                                    <p class="error">{{ $message }}</p>
+                                  @enderror
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label" for="modalInputEmail1">Stasiun Berangkat</label>
                                 
-                                  <select name="stasiun_from_id" id="" class="form-select">
+                                  <select name="stasiun_from_id" id="" class="form-select @error('stasiun_from_id')
+                                    
+                                  @enderror">
                                     @foreach ($stasiun as $s)
                                       <option value="{{ $s->id }}">{{ $s->nama_stasiun }}</option>
                                     @endforeach
                                   </select>
+                                  @error('stasiun_from_id')
+                                    <p class="error">{{ $message }}</p>
+                                  @enderror
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label" for="modalInputEmail1">Jam Berangkat</label>
-                                  <input class="form-control" id="modalInputEmail1" type="time" name="jam_berangkat">
-                                  
+                                  <input class="form-control @error('jam_berangkat')
+                                  @enderror" id="modalInputEmail1" type="time" name="jam_berangkat">
+                                  @error('jam_berangkat')
+                                    <p class="error">{{ $message }}</p>
+                                  @enderror
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label" for="modalInputEmail1">Stasiun Tujuan</label>
-                                  <select name="stasiun_to_id" id="" class="form-select">
+                                  <select name="stasiun_to_id" id="" class="form-select @error('stasiun_to_id')
+                                  @enderror">
                                     @foreach ($stasiun as $s)
                                       <option value="{{ $s->id }}">{{ $s->nama_stasiun }}</option>
                                     @endforeach
                                   </select>
-                                  
+                                  @error('stasiun_to_id')
+                                    <p class="error">{{ $message }}</p>
+                                  @enderror
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label" for="modalInputEmail1">Jam Tujuan</label>
-                                  <input class="form-control" id="modalInputEmail1" type="time" name="jam_tujuan">
-                                  
+                                  <input class="form-control @error('jan_tujuan')
+                                  @enderror" id="modalInputEmail1" type="time" name="jam_tujuan">
+                                  @error('jam_tujuan')
+                                    <p class="error">{{ $message }}</p>
+                                  @enderror
                                 </div>
                               
                               </div>
@@ -118,11 +130,11 @@
           <!-- Modal Edit -->
           @foreach ($kereta as $k )
             
-          <div class="modal fade text-start" id="myModal{{ $k->id }}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal fade text-start editModal" id="myModal{{ $k->id }}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="myModalLabel">Tambah Kereta</h5>
+                              <h5 class="modal-title" id="myModalLabel">Edit Kereta</h5>
                               <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -133,7 +145,9 @@
                                 <div class="mb-3">
                                   <label class="form-label" for="modalInputEmail1">Nama Kereta</label>
                                   <input class="form-control" id="modalInputEmail1" type="text" name="nama_kereta" value="{{ $k->nama_kereta }}">
-                                  
+                                  @error('nama_kereta')
+                                    <p class="error">{{ $message }}</p>
+                                  @enderror
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label" for="modalInputEmail1">Kelas</label>
@@ -147,7 +161,13 @@
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label" for="modalInputEmail1">Stasiun Berangkat</label>
-                                  <input class="form-control" id="modalInputEmail1" type="text" name="berangkat" value="{{ $k->berangkat }}">
+                                  <select name="stasiun_from_id" id="" class="form-select">
+                                    <option value="{{ $k->stasiunFrom->id }}" selected>{{ $k->stasiunFrom->nama_stasiun }}</option>
+                                    <option value="" disabled>-----</option>
+                                    @foreach ($stasiun as $s)
+                                      <option value="{{ $s->id }}">{{ $s->nama_stasiun }}</option>
+                                    @endforeach
+                                  </select>
                                   
                                 </div>
                                 <div class="mb-3">
@@ -157,8 +177,13 @@
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label" for="modalInputEmail1">Stasiun Tujuan</label>
-                                  <input class="form-control" id="modalInputEmail1" type="text" name="tujuan" value="{{ $k->tujuan }}">
-                                  
+                                  <select name="stasiun_to_id" id="" class="form-select">
+                                      <option value="{{ $k->stasiunTo->id }}" selected>{{ $k->stasiunTo->nama_stasiun }}</option>
+                                      <option value="" disabled>-----</option>
+                                    @foreach ($stasiun as $s)
+                                      <option value="{{ $s->id }}">{{ $s->nama_stasiun }}</option>
+                                    @endforeach
+                                  </select>
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label" for="modalInputEmail1">Jam Tujuan</label>
@@ -179,9 +204,6 @@
           <!-- End Modal -->
           <section class="tables">   
             <div class="container-fluid">
-             
-              
-                
                   <div class="card mb-0">
                     <div class="card-header">
                       <div class="card-close">
@@ -254,15 +276,31 @@
 @endsection
 
 @push('js_scripts')
-@if (count($errors)>0)
-    <script>
-      $(document).ready(function(){
-        $('#myModal').modal('show')
-
+<script>
+  $('.delete_confirm').click(function(event){
+    var form = $(this).closest("form");
+    event.preventDefault();
+    swal.fire({
+      title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+    }) .then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+                Swal.fire(
+                'Deleted!',
+                'Your data has been deleted.',
+                'success'
+                )
+            }
       })
-    </script>
-  @endif
-  <script>
+  })
+ 
+    
      $(document).ready(function() {
         $('#myTable').DataTable();
     });

@@ -9,7 +9,20 @@ class Pemesanan extends Model
 {
     use HasFactory;
     
-    public $guarded = ['id'];
+    protected $fillable = [
+        'uuid',
+        'username',
+        'alamat',
+        'nik',
+        'harga',
+        'jenis_gerbong',
+        'gerbong',
+        'tanggal',
+        'huruf_kursi',
+        'nomor_kursi',
+        'users_id',
+        'penumpang_id'
+    ];
     public $table = "pemesanans";
     public $timestamps = true;
     

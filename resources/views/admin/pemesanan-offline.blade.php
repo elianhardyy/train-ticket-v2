@@ -31,7 +31,7 @@
                 </div>
                 <div class="card-body">
                   <p class="text-sm">Lorem ipsum dolor sit amet consectetur.</p>
-                  <form class="form-horizontal" action="/pesan-offline" method="post">
+                  <form class="form-horizontal" action="{{ route('postorder') }}" method="post">
                     @csrf
                     <div class="row gy-2 mb-4">
                       <label class="col-sm-3 form-label" for="inputHorizontalElOne">Nama</label>

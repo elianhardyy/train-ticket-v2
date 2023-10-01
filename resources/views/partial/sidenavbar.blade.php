@@ -1,9 +1,10 @@
 <nav class="side-navbar z-index-40">
           <!-- Sidebar Header-->
-          <div class="sidebar-header d-flex align-items-center py-4 px-3"><img class="avatar shadow-0 img-fluid rounded-circle" src="img/avatar-1.jpg" alt="...">
+          <div class="sidebar-header d-flex align-items-center py-4 px-3"><img class="avatar shadow-0 img-fluid rounded-circle" src="{{ asset('storage/'.auth()->user()->profile->photo) }}" alt="...">
             <div class="ms-3 title">
-              <h1 class="h4 mb-2">Mark Stephen</h1>
-              <p class="text-sm text-gray-500 fw-light mb-0 lh-1">Web Designer</p>
+              <a href="/profile/{{ auth()->user()->username }}" class="h4 mb-2">{{ ucfirst(auth()->user()->username) }}</a>
+              
+              <p class="text-sm text-gray-500 fw-light mb-0 lh-1">Admin</p>
             </div>
           </div>
           <!-- Sidebar Navidation Menus--><span class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Main</span>
@@ -16,6 +17,17 @@
                 <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                   <use xlink:href="#survey-1"> </use>
                 </svg>Pemberhentian </a></li>
+              <li class="sidebar-item"><a class="sidebar-link" href="#exampledropdownDropdown3" data-bs-toggle="collapse"> 
+                <i class="fa-solid fa-user fa-xl">
+                  <use xlink:href="#browser-window-1"> </use>
+                </i>&nbsp;
+                  Users </a>
+                <ul class="collapse list-unstyled " id="exampledropdownDropdown3">
+                  <li class=" sidebar-item {{ request()->is('admin/staff') ? 'active' : '' }}"><a class="sidebar-link " href="/admin/staff">Staff</a></li>
+                  <li class="sidebar-item {{ request()->is('admin/customer') ? 'active' : '' }} "><a class="sidebar-link " href="/admin/customer">Customer  </a></li>
+                  <li><a class="sidebar-link" href="#">Page</a></li>
+                </ul>
+            </li>
             <li class="sidebar-item"><a class="sidebar-link" href="#exampledropdownDropdown1" data-bs-toggle="collapse"> 
                 
                 <i class="fa-solid fa-train fa-xl " >
@@ -57,23 +69,5 @@
                 <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                   <use xlink:href="#disable-1"> </use>
                 </svg>Login page </a></li>
-          </ul><span class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Extras</span>
-          <ul class="list-unstyled py-4">
-            <li class="sidebar-item"> <a class="sidebar-link" href="#"> 
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#imac-screen-1"> </use>
-                </svg>Demo </a></li>
-            <li class="sidebar-item"> <a class="sidebar-link" href="#"> 
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#chart-1"> </use>
-                </svg>Demo </a></li>
-            <li class="sidebar-item"> <a class="sidebar-link" href="#"> 
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#quality-1"> </use>
-                </svg>Demo </a></li>
-            <li class="sidebar-item"> <a class="sidebar-link" href="#"> 
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#security-shield-1"> </use>
-                </svg>Demo </a></li>
           </ul>
         </nav>

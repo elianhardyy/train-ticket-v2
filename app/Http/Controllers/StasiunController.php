@@ -15,7 +15,7 @@ class StasiunController extends Controller
             case 'POST':
                 $stasiun = $request->validate([
                     "nama_stasiun"=>"required",
-                    "slug_stasiun"=>"required"
+                    
                 ]);
                 Stasiun::create($stasiun);
                 return redirect('/stasiun')->with('success',"Stasiun has been added");
@@ -24,11 +24,11 @@ class StasiunController extends Controller
                 $id = $request->route('id');
                 Stasiun::where('id',$id)->update([
                     "nama_stasiun"=>$request->nama_stasiun,
-                    "slug_stasiun"=>$request->slug_stasiun
+                    
                 ]);
                 $request->validate([
                     "nama_stasiun"=>"required",
-                    "slug_stasiun"=>"required"
+                    
                 ]);
                 return redirect('/stasiun')->with('success',"Train has been edited");
                 break;

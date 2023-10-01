@@ -12,19 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pemesanans', function (Blueprint $table) {
-            $table->id();
+            $table->uuid()->primary();
             $table->string('username');
             $table->string('alamat');
             $table->string('nik');
             $table->integer('harga');
+            $table->string('jenis_gerbong');
             $table->string('gerbong');
             $table->dateTime('tanggal');
             $table->string('nomor_kursi');
+            $table->string('huruf_kursi');
             $table->string('status')->default('belum');
             $table->unsignedBigInteger('penumpang_id');
             $table->unsignedBigInteger('users_id');
             $table->foreign('penumpang_id')->references('id')->on('penumpangs');
-            $table->foreign('users_id')->references('id')->on('users');
+            $table->foreign('users_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -13,10 +13,13 @@
     <!-- theme stylesheet-->
     <link rel="stylesheet" href="{{ asset('css/style.default.css') }}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
- 
+    <script type="text/javascript"
+    src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="{{ config('midtrans.client_key') }}"></script>
 <script src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script>
     <script src="https://kit.fontawesome.com/bd20a423ca.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -27,7 +30,7 @@
 <body>
     @auth
         @if (route('login'))
-            @if (!auth()->user()->hasRole('customer'))
+            @if (auth()->user()->hasRole('admin'))
             <div class="page">
                 <header class="header z-index-50">
                     @include('partial.navbar')
@@ -40,9 +43,21 @@
                     </div>
                 </div>
             </div>
+            @elseif (auth()->user()->hasRole('staff'))
+            <div class="page">
+                <header class="header z-index-50">
+                    @include('partial.navbar')
+                </header>     
+                <div class="page-content d-flex align-items-stretch">
+                    @include('partial.sidenavbar-staff')
+                    <div class="content-inner w-100">
+                        @yield('content')
+                        @include('partial.footer')
+                    </div>
+                </div>
+            </div>
             @else
             @include('partial.navbar-cust')
-            
             <div class="container mt-3">
                 @yield('customer')
             </div>

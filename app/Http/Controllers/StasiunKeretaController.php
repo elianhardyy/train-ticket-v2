@@ -30,14 +30,22 @@ class StasiunKeretaController extends Controller
                 StasiunKereta::create($pemberhentian);
                 return redirect('/pemberhentian')->with('success','Stasiun');
                 break;
+                //after find kereta id you will find stasiun to id
             case 'PUT':
                 $param = $request->route('id');
+                $stasiunkereta = StasiunKereta::where('id',$param)->first();
                 StasiunKereta::where('id',$param)->update([
-                    "jam_kereta_from"=>$request->jam_kereta_from,
                     "jam_kereta_to"=>$request->jam_kereta_to,
-                    "stasiun_from_id"=>$request->stasiun_from_id,
                     "stasiun_to_id"=>$request->stasiun_to_id,
+                ]);
+                StasiunKereta::where('kereta_id',$stasiunkereta["kereta_id"])->where('stasiun_from_id',$stasiunkereta["stasiun_from_id"])->update([
+                    "stasiun_from_id"=>$request->stasiun_from_id,
+                    "jam_kereta_from"=>$request->jam_kereta_from,
                     "kereta_id"=>$request->kereta_id
+                ]);
+                Kereta::where('id',$stasiunkereta["kereta_id"])->update([
+                    "stasiun_from_id"=>$request->stasiun_from_id,
+                    "jam_berangkat"=>$request->jam_kereta_from
                 ]);
                 $request->validate([
                     "jam_kereta_from"=>"required",
@@ -46,6 +54,7 @@ class StasiunKeretaController extends Controller
                     "stasiun_to_id"=>"required",
                     "kereta_id"=>"required"
                 ]);
+                $kereta = Kereta::where('id',);
                 return redirect("/pemberhentian")->with('success','Train has been edited');
                 break;
             case 'DELETE':
@@ -90,3 +99,4 @@ class StasiunKeretaController extends Controller
 
    
 }
+//Many through many

@@ -35,7 +35,7 @@
                       @php
                         $harga = 0;
                       @endphp
-                       @foreach ($pemesanan as $p)
+                       @foreach ($checkout as $p)
                        <tr>
                          <td>{{ $p->penumpang->kereta->nama_kereta }}</td>
                          <td>{{ number_format($p->harga) }}</td>
@@ -60,15 +60,10 @@
               </div>
               <hr>
               <div class="row invoice-footer">
-                  <div class="col-lg-12">
-                    <button id="print" onclick="printContent('printReceipt');" class="btn btn-lg btn-space btn-primary">Print</button>
-                  </div>
                   <div class="col-md-3">
-                      <form action="{{ route('checkout') }}" method="post">
-                        @csrf
-                        <input type="hidden" name="userid" value="{{ auth()->user()->id }}">
-                        <button class="btn btn-secondary">Bayar</button>
-                      </form>
+                   
+                      <button class="btn btn-secondary" id="pay-button">Bayar</button>
+                   
                   </div>
               </div>
               
@@ -76,3 +71,30 @@
           </div>
         </div>
 @endsection
+@push('js_scripts')
+<script type="text/javascript">
+    // For example trigger on button clicked, or any time you need
+    var payButton = document.getElementById('pay-button');
+    payButton.addEventListener('click', function () {
+      // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
+      window.snap.pay('{{ $snapToken }}', {
+        onSuccess: function(result){
+          /* You may add your own implementation here */
+          alert("payment success!"); console.log(result);
+        },
+        onPending: function(result){
+          /* You may add your own implementation here */
+          alert("wating your payment!"); console.log(result);
+        },
+        onError: function(result){
+          /* You may add your own implementation here */
+          alert("payment failed!"); console.log(result);
+        },
+        onClose: function(){
+          /* You may add your own implementation here */
+          alert('you closed the popup without finishing the payment');
+        }
+      })
+    });
+  </script>
+@endpush

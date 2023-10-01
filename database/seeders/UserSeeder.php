@@ -13,8 +13,11 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        
         User::create([
-            "name"=>"admin",
+            "first_name"=>"Admin",
+            "last_name"=>"Admin",
+            "username"=>"admin",
             "email"=>"admin@train.com",
             "email_verified_at"=>now(),
             "password"=>bcrypt("admin123"),
@@ -24,7 +27,9 @@ class UserSeeder extends Seeder
             "remember_token"=>Str::random(10),
         ])->assignRole("admin");
         User::create([
-            "name"=>"staff",
+            "first_name"=>"Staff",
+            "last_name"=>"Staff",
+            "username"=>"staff",
             "email"=>"staff@train.com",
             "email_verified_at"=>now(),
             "password"=>bcrypt("staff123"),
@@ -34,7 +39,9 @@ class UserSeeder extends Seeder
             "remember_token"=>Str::random(10),
         ])->assignRole("staff");
         User::create([
-            "name"=>"customer",
+            "first_name"=>"Customer",
+            "last_name"=>"Customer",
+            "username"=>"customer",
             "email"=>"customer@train.com",
             "email_verified_at"=>now(),
             "password"=>bcrypt("customer123"),

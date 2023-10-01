@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(StasiunSeeder::class);
         $this->call(KeretaSeeder::class);
         $this->call(StasiunKeretaSeeder::class);
+        // $this->call(ProfileSeeder::class);
     }
 }

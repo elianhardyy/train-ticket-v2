@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class PemesananOfflineController extends Controller
 {
-    public function pacul(Request $request)
+    public function home(Request $request)
     {
         $method = $request->method();
         $kereta = $request->route('kereta');

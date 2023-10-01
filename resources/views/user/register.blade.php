@@ -10,15 +10,29 @@
             <div class="details">
 
                 <div class="input-box">
+                    <label for=" first_name">First Name</label>
+                    <input type="text" class="form-control" name="first_name" placeholder="Enter your username" autocomplete="off" >
+                    @error('first_name')
+                        <p>{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="input-box">
+                    <label for=" last_name">Last Name</label>
+                    <input type="text" class="form-control" name="last_name" placeholder="Enter your username" autocomplete="off" >
+                    @error('last_name')
+                        <p>{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="input-box">
                     <label for=" username">Username</label>
-                    <input type="text" class="form-control" name="name" placeholder="Enter your username" autocomplete="off" >
-                    @error('name')
+                    <input type="text" class="form-control" name="username" placeholder="Enter your username" autocomplete="off" >
+                    @error('username')
                         <p>{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="input-box">
                     <label for=" username">NIK</label>
-                    <input type="text" class="form-control" name="nik" placeholder="Enter your NIK" autocomplete="off" >
+                    <input type="text" class="form-control" name="nik" placeholder="Enter your NIK" autocomplete="off" inputmode="numeric">
                     @error('nik')
                         <p>{{ $message }}</p>
                     @enderror

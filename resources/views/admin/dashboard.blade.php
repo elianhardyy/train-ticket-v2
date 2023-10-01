@@ -20,12 +20,12 @@
                           </svg>
                         </div>
                         <div class="mx-3">
-                          <h6 class="h4 fw-light text-gray-600 mb-3">New<br>Clients</h6>
+                          <h6 class="h4 fw-light text-gray-600 mb-3">Pelanggan</h6>
                           <div class="progress" style="height: 4px">
                             <div class="progress-bar bg-violet" role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </div>
-                        <div class="number"><strong class="text-lg">25</strong></div>
+                        <div class="number"><strong class="text-lg">{{ count($customer) }}</strong></div>
                       </div>
                     </div>
                     <!-- Item -->
@@ -37,12 +37,12 @@
                           </svg>
                         </div>
                         <div class="mx-3">
-                          <h6 class="h4 fw-light text-gray-600 mb-3">Work<br>Orders</h6>
+                          <h6 class="h4 fw-light text-gray-600 mb-3">Penumpang</h6>
                           <div class="progress" style="height: 4px">
-                            <div class="progress-bar bg-red" role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-red" role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="{{ count($penumpang) }}" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </div>
-                        <div class="number"><strong class="text-lg">70</strong></div>
+                        <div class="number"><strong class="text-lg">{{ count($penumpang) }}</strong></div>
                       </div>
                     </div>
                     <!-- Item -->
@@ -54,12 +54,12 @@
                           </svg>
                         </div>
                         <div class="mx-3">
-                          <h6 class="h4 fw-light text-gray-600 mb-3">New<br>Invoices</h6>
+                          <h6 class="h4 fw-light text-gray-600 mb-3">Pemesanan</h6>
                           <div class="progress" style="height: 4px">
-                            <div class="progress-bar bg-green" role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-green" role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="{{ count($pemesanan) }}" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </div>
-                        <div class="number"><strong class="text-lg">40</strong></div>
+                        <div class="number"><strong class="text-lg">{{ count($pemesanan) }}</strong></div>
                       </div>
                     </div>
                     <!-- Item -->
@@ -71,12 +71,29 @@
                           </svg>
                         </div>
                         <div class="mx-3">
-                          <h6 class="h4 fw-light text-gray-600 mb-3">Open<br>Cases</h6>
+                          <h6 class="h4 fw-light text-gray-600 mb-3">Staff</h6>
                           <div class="progress" style="height: 4px">
                             <div class="progress-bar bg-orange" role="progressbar" style="width: 50%; height: 4px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </div>
-                        <div class="number"><strong class="text-lg">50</strong></div>
+                        <div class="number"><strong class="text-lg">{{ count($staff) }}</strong></div>
+                      </div>
+                    </div>
+                    <!-- item -->
+                    <div class="col-xl-3 col-sm-6 py-4 border-lg-end border-gray-200">
+                      <div class="d-flex align-items-center">
+                        <div class="icon flex-shrink-0 bg-green">
+                          <svg class="svg-icon svg-icon-sm svg-icon-heavy">
+                            <use xlink:href="#numbers-1"> </use>
+                          </svg>
+                        </div>
+                        <div class="mx-3">
+                          <h6 class="h4 fw-light text-gray-600 mb-3">Pemesanan Offline</h6>
+                          <div class="progress" style="height: 4px">
+                            <div class="progress-bar bg-green" role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="{{ count($pemesanan) }}" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                        </div>
+                        <div class="number"><strong class="text-lg">{{ count($pemesananoffline) }}</strong></div>
                       </div>
                     </div>
                   </div>
@@ -92,17 +109,19 @@
                 <div class="col-lg-3 col-12">
                   <div class="card mb-3">
                     <div class="card-body">
-                      <div class="d-flex align-items-center">
-                        <div class="icon flex-shrink-0 bg-red"><i class="fas fa-tasks"></i></div>
-                        <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">234</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Applications</small></div>
-                      </div>
+                      <a href="/admin" class="data-href">
+                        <div class="d-flex align-items-center">
+                          <div class="icon flex-shrink-0 bg-red"><i class="fas fa-tasks"></i></div>
+                          <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">{{ count($kereta) }}</strong><small class="text-uppercase text-gray-500 small d-block lh-1" style="color: black">Kereta</small></div>
+                        </div>
+                      </a>
                     </div>
                   </div>
                   <div class="card mb-3">
                     <div class="card-body">
                       <div class="d-flex align-items-center">
                         <div class="icon flex-shrink-0 bg-green"><i class="far fa-calendar"></i></div>
-                        <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">152</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Interviews</small></div>
+                        <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">{{ count($stasiun) }}</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Stasiun</small></div>
                       </div>
                     </div>
                   </div>
@@ -110,7 +129,7 @@
                     <div class="card-body">
                       <div class="d-flex align-items-center">
                         <div class="icon flex-shrink-0 bg-orange"><i class="far fa-paper-plane"></i></div>
-                        <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">147</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Forwards</small></div>
+                        <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">{{ count($pemberhentian) }}</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Pemberhentian</small></div>
                       </div>
                     </div>
                   </div>

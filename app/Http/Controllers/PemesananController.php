@@ -8,44 +8,54 @@ use App\Models\Penumpang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 class PemesananController extends Controller
 {
     public function pemesanan(Request $request)
-    {
+    {   
         $penumpang = Penumpang::where('id',$request->penumpang_id)->first();
         $kereta = Kereta::where('id',$penumpang->kereta_id)->first();
         $hargatotal = $kereta->harga * $penumpang->penumpang;
         //$request->input('tanggal')= now();
 
-        $pem = $request->validate([
-            "username"=>"required",
-            "alamat"=>"required",
-            "nik"=>"required",
-            "harga"=>"required",
-            "gerbong"=>"required",
-            "tanggal"=>"required",
-            "nomor_kursi"=>"required",
-            "users_id",
-            "penumpang_id",
-        ]);
+        // $request->validate([
+        //     "username[]"=>"required",
+        //     "alamat[]"=>"required",
+        //     "nik[]"=>"required",
+        //     "harga[]"=>"required",
+        //     "gerbong[]"=>"required",
+        //     "tanggal[]"=>"required",
+        //     "nomor_kursi[]"=>"required",
+        //     "users_id",
+        //     "penumpang_id",
+        // ]);
         //$pem['harga'] = $hargatotal;
         $un = $request->input('username');
         $al = $request->input('alamat');
         $nik = $request->input('nik');
         $harga = $request->input('harga');
+        $jenisGerbong = $request->input('jenis_gerbong');
         $gerbong = $request->input('gerbong');
         $tanggal = $request->input('tanggal');
         $nomorkur = $request->input('nomor_kursi');
+        $hurufkur = $request->input('huruf_kursi');
         $usersid = $request->input('users_id');
         $penumid = $request->input('penumpang_id');
+        $uuid = $request->input('uuid');
         foreach ($un as $key=>$val) {
+            
             $data = [
+                'uuid'=>$uuid[$key],
                 'username'=>$val,
                 "alamat"=>$al[$key],
                 "nik"=>$nik[$key],
                 "harga"=>$harga[$key],
+                "jenis_gerbong"=>$jenisGerbong[$key],
                 "gerbong"=>$gerbong[$key],
                 "tanggal"=>$tanggal[$key],
+                "huruf_kursi"=>$hurufkur[$key],
                 "nomor_kursi"=>$nomorkur[$key],
                 "users_id"=>$usersid[$key],
                 "penumpang_id"=>$penumid[$key]
@@ -54,7 +64,7 @@ class PemesananController extends Controller
             Pemesanan::create($data);
         }
       
-        return redirect('/print');
+        return redirect('/ticket-order');
         // $pem = Pemesanan::with('penumpang')->with('user')->where('penumpang_id',$pem['penumpang_id'])->where('users_id',$pem['users_id'])->get();
     }
     public function detail(Request $request)
@@ -90,10 +100,77 @@ class PemesananController extends Controller
     }
 
     //Customer
+
+    public function pemesanantiket()
+    {
+        $pemesanan = Pemesanan::with('penumpang')->with('penumpang.kereta')->with('penumpang.stasiunkereta')->with('penumpang.stasiunkereta.stasiunTo')->with('penumpang.stasiunkereta.stasiunFrom')->with('user')->where('users_id',auth()->user()->id)->get();
+        //$pemesanan = Pemesanan::with('penumpang')->with('penumpang.kereta')->with('penumpang.stasiunkereta')->with('penumpang.stasiunkereta.stasiunTo')->with('penumpang.stasiunkereta.stasiunFrom')->with('user')->where('users_id',auth()->user()->id)->first();
+        $title = "Pemesanan Tiket";
+        return view('customer.print-ticket',compact('pemesanan','title'));
+    }
     public function printticket()
     {
         //$pdf = Pdf::loadView('admin.');
         return view('customer.print-ticket',["title"=>"Pemesanan"]);
 
+    }
+    public function pembayaran(Request $request)
+    {
+
+        // Set your Merchant Server Key
+        \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
+        $checkout = Pemesanan::with('penumpang')->with('penumpang.kereta')->with('penumpang.stasiunkereta')->with('penumpang.stasiunkereta.stasiunTo')->with('penumpang.stasiunkereta.stasiunFrom')->with('user')->where("users_id",$request->userid)->get();
+        $order = Pemesanan::with('user')->where('users_id',auth()->user()->id)->first();
+        $harga = 0;
+        foreach ($checkout as $c) {
+            $harga += $c->harga;
+        }
+      
+            // dd($order->uuid);
+        
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => $order->uuid,
+                'gross_amount' => $harga,
+            ),
+            'customer_details' => array(
+                'first_name' => Auth::user()->first_name,
+                'last_name' => Auth::user()->last_name,
+                'email' => Auth::user()->email,
+                'phone' => Auth::user()->phone,
+            ),
+        );
+    
+        $title = "Pembayaran";
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        return view('customer.checkout',compact('snapToken','checkout','title'));
+    }
+    //get by uuid, then order->users_id == auth()->user()->id;
+    public function callback(Request $request)
+    {
+        $serverKey = config('midtrans.server_key');
+        
+        $hashed = hash('sha12',$request->order_id.$request->status_code.$request->gross_amount.$serverKey);
+        if($hashed == $request->signature_key){
+            if($request->transaction_status == 'capture'){
+                $callback = Pemesanan::where("uuid",$request->order_id)->first();
+                // $callback->update([
+                //     'status'=>'sudah'
+                // ]);
+                $order = Pemesanan::where("users_id",$callback->users_id)->get();
+                foreach($order as $o){ //no foreach
+                    //dd($order[$i]->users_id);
+                    Pemesanan::where("users_id",$o->users_id)->update([
+                        'status'=>'sudah'
+                    ]);
+                }
+            }
+        }
     }
 }

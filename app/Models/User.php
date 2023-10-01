@@ -19,7 +19,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'username',
         'email',
         'nik',
         'address',
@@ -49,7 +51,7 @@ class User extends Authenticatable
     public $table = "users";
     public function profile()
     {
-        return $this->hasOne(Profile::class);
+        return $this->hasOne(Profile::class,"users_id");
     }
     public function pemesanan()
     {

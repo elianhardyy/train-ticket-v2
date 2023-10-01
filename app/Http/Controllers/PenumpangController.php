@@ -14,7 +14,7 @@ class PenumpangController extends Controller
     //Admin
     public function passangermanage()
     {
-        $pass = Penumpang::with('user')->with('kereta')->get();
+        $pass = Penumpang::with('user')->with('kereta')->with('stasiunkereta.stasiunFrom')->with('stasiunkereta.stasiunTo')->get();
         $kereta = Kereta::all();
         $stasiun = Stasiun::all();
         $passoffline = PemesananOffline::with('kereta')->with('stasiunkereta')->get();

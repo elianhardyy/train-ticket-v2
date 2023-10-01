@@ -75,11 +75,7 @@
                                   <input class="form-control" id="modalInputEmail1" type="text" name="nama_stasiun">
                                   
                                 </div>
-                                <div class="mb-3">
-                                  <label class="form-label" for="modalInputEmail1">Slug Stasiun</label>
-                                  <input class="form-control" id="modalInputEmail1" type="text" name="slug_stasiun">
-                                  
-                                </div>
+                                
                               </div>
                               <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
@@ -109,14 +105,7 @@
                                   <label class="form-label" for="modalInputEmail1">Nama Kereta</label>
                                   <input class="form-control" id="modalInputEmail1" type="text" name="nama_kereta" value="{{ $s->nama_stasiun }}">
                                   
-                                </div>
-                                <div class="mb-3">
-                                  <label class="form-label" for="modalInputEmail1">Kelas</label>
-                                  <input class="form-control" id="modalInputEmail1" type="text" name="kelas" value="{{ $s->slug_stasiun }}">
-                                  
-                                </div>
-                               
-                              
+                                </div>  
                               </div>
                               <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
@@ -171,7 +160,7 @@
                             <tr>
                               <th scope="row">{{ $no++ }}</th>
                               <td>{{ $s->nama_stasiun}}</td>
-                              <td>{{ $s->slug_stasiun}}</td>
+                              <td>{{ $s->slug}}</td>
                               <td>
                                 <button class="btn btn-success" type="button" data-bs-target="#myModal{{ $s->id }}" data-bs-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button>
                                 <form action="{{ route('deletestasiun',$s->id) }}" method="POST" >

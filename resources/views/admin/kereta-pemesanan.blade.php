@@ -69,9 +69,7 @@
                        </div>
                     </div>
                     
-                    <form action="/pesandulur/{{ $p->kereta->id }}/{{ $p->id }}" method="get">
-                      
-             
+                    <form action="/pesan/{{ $p->kereta->id }}/{{ $p->id }}" method="get">
                        <button type="submit" class="btn btn-primary">Pesan</button>
                     </form>
                  </div>

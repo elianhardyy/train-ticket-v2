@@ -30,12 +30,12 @@
                         </div>
                         <form action="/penumpang" method="POST">
                             @csrf
-                            <input type="text" name="dewasa" value="{{ $pass }}">
-                            <input type="text" name="anak" value="{{ $anak }}">
-                            <input type="text" name="tanggal_pesan" value="{{ $dateorder }}">
-                            <input type="text" name="users_id" value="{{ auth()->user()->id }}">
-                            <input type="text" name="kereta_id" value="{{ $p->kereta->id }}">
-                            <input type="text" name="stasiun_kereta_id" value="{{ $p->id }}">
+                            <input type="hidden" name="dewasa" value="{{ $pass }}">
+                            <input type="hidden" name="anak" value="{{ $anak }}">
+                            <input type="hidden" name="tanggal_pesan" value="{{ $dateorder }}">
+                            <input type="hidden" name="users_id" value="{{ auth()->user()->id }}">
+                            <input type="hidden" name="kereta_id" value="{{ $p->kereta->id }}">
+                            <input type="hidden" name="stasiun_kereta_id" value="{{ $p->id }}">
                             <button type="submit" class="btn btn-primary">Pesan</button>
                         </form>
                     </div>

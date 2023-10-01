@@ -30,7 +30,6 @@
                                 @csrf
                                 <div class="mb-3">
                                   <label for="" class="form-label">Waktu Keberangkatan</label>
-
                                   <input type="time" class="form-control" name="jam_kereta_from">
                                   <label for="" class="form-label">Waktu Kedatangan</label>
                                   <input type="time" class="form-control" name="jam_kereta_to">
