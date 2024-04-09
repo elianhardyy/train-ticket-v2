@@ -44,6 +44,21 @@
                       </div>
                         
                       @endif
+                      <form action="status-belum" method="get">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="">Awal</label>
+                            <input type="datetime-local" name="awal" id="awal" class="form-control">
+                          </div>
+                          <div class="col-md-3">
+                            <label for="">Akhir</label>
+                            <input type="datetime-local" name="akhir" id="awal" class="form-control">
+                          </div>
+                          <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                          </div>
+                        </div>
+                      </form>
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">

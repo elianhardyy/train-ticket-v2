@@ -13,7 +13,7 @@ use App\Models\StasiunKereta;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 Route::post('/logout',[UserController::class,'logout'])->name('logout');
 //Authentication
@@ -23,8 +23,11 @@ Route::middleware(['guest'])->group(function(){
         Route::post('/register','register')->name('register');
         Route::get('/login','login')->name('loginView');
         Route::post('/login','login')->name('login');
+        Route::get('/login/admin','adminLoginPage')->name('adminLoginView');
+        Route::post('/admin/login','adminLogin')->name('adminLogin');
     });
 });
+
 //Admin
  Route::middleware(['role:admin'])->group(function(){
     Route::controller(KeretaController::class)->group(function(){

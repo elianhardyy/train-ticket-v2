@@ -14,7 +14,7 @@
 <input type="hidden" name="penumpang_id[]" value="{{ $idpenum->id }}">
 <input type="hidden" name="harga[]" value="{{ $idpenum->kereta->harga }}">
 <input type="hidden" name="tanggal[]" value="{{ now()}}">
-<input type="text" name="uuid[]" value="{{ Str::uuid() }}">
+<input type="hidden" name="uuid[]" value="{{ Str::uuid() }}">
 @if ($i == 0)
 <div class="row">
     <div class="card">
@@ -74,7 +74,6 @@
             <input type="text" name="username[]" class=" form-control" required>
             <label for="phone">NIK</label>
             <input type="text" name="nik[]" class=" form-control">
-            
             <label for="phone">Alamat</label>
             <input type="text" name="alamat[]" class="form-control">
             <label for="phone">Nomor Kursi</label>

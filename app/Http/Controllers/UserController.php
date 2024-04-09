@@ -78,9 +78,6 @@ class UserController extends Controller
         
                 if (Auth::attempt($credentials, $request->remember)) {
                     $request->session()->regenerate();
-                    if ($request->user()->hasRole('admin')) {
-                        return redirect()->intended('/admin');
-                    }
                     if ($request->user()->hasRole('staff')) {
                         return redirect()->intended('/staff');
                     }
@@ -94,12 +91,28 @@ class UserController extends Controller
         }
         return view('user.login',["title"=>"Login"]);
     }
+    public function adminLoginPage(){
+        return view('admin.login',["title"=>"Login"]);
+    }
+    public function adminLogin(Request $request){
+        $credentials = $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        if (Auth::attempt($credentials, $request->remember)) {
+            $request->session()->regenerate();
+            if ($request->user()->hasRole('admin')) {
+                return redirect()->intended('/admin');
+            }
+        }
+        return back()->with('loginError', 'email atau password salah');
+    }
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login');
+        return redirect('/');
     }
     
 }

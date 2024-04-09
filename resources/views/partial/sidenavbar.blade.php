@@ -1,6 +1,10 @@
 <nav class="side-navbar z-index-40">
           <!-- Sidebar Header-->
+          @if (auth()->user()->profile)
           <div class="sidebar-header d-flex align-items-center py-4 px-3"><img class="avatar shadow-0 img-fluid rounded-circle" src="{{ asset('storage/'.auth()->user()->profile->photo) }}" alt="...">
+          @else
+            <div class="sidebar-header d-flex align-items-center py-4 px-3"><img class="avatar shadow-0 img-fluid rounded-circle" src="" alt="...">
+          @endif
             <div class="ms-3 title">
               <a href="/profile/{{ auth()->user()->username }}" class="h4 mb-2">{{ ucfirst(auth()->user()->username) }}</a>
               
@@ -61,13 +65,9 @@
               <ul class="collapse list-unstyled " id="exampledropdownDropdown2">
                 <li class=" sidebar-item {{ request()->is('status-sudah') ? 'active' : '' }}"><a class="sidebar-link " href="/status-sudah">Ticket <div class="badge bg-success">sudah</div></a></li>
                 <li class=" sidebar-item {{ request()->is('status-belum') ? 'active' : '' }}"><a class="sidebar-link " href="/status-belum">Ticket <div class="badge bg-secondary">belum</div></a></li>
-                
-                <li><a class="sidebar-link" href="#">Page</a></li>
+               
               </ul>
             </li>
-            <li class="sidebar-item"><a class="sidebar-link" href="login.html"> 
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#disable-1"> </use>
-                </svg>Login page </a></li>
+            
           </ul>
         </nav>

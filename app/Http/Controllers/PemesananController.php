@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Kereta;
 use App\Models\Pemesanan;
 use App\Models\Penumpang;
+use Barryvdh\DomPDF\Facade\Pdf ;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Barryvdh\DomPDF\Facade\Pdf;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+
 
 class PemesananController extends Controller
 {
@@ -44,8 +46,7 @@ class PemesananController extends Controller
         $usersid = $request->input('users_id');
         $penumid = $request->input('penumpang_id');
         $uuid = $request->input('uuid');
-        foreach ($un as $key=>$val) {
-            
+        foreach ($un as $key=>$val) {   
             $data = [
                 'uuid'=>$uuid[$key],
                 'username'=>$val,
@@ -62,8 +63,9 @@ class PemesananController extends Controller
             ];
 
             Pemesanan::create($data);
+            
         }
-      
+        
         return redirect('/ticket-order');
         // $pem = Pemesanan::with('penumpang')->with('user')->where('penumpang_id',$pem['penumpang_id'])->where('users_id',$pem['users_id'])->get();
     }
@@ -94,7 +96,12 @@ class PemesananController extends Controller
         }
         if($sudah)
         {
-            $pemesanansudah = Pemesanan::with('penumpang.kereta')->with('user')->where('status','sudah')->get();
+            $pemesanansudah = Pemesanan::with('penumpang.kereta')->with('user')->where('status','sudah')->orderBy('users_id','desc')->get();
+            if ($request->input()) {
+                $awal = $request->input('awal');
+                $akhir = $request->input('akhir');
+                $pemesanansudah = Pemesanan::with('penumpang.kereta')->with('user')->where('status','sudah')->whereBetween('created_at',[$awal,$akhir])->orderBy('users_id','desc')->get();
+            }
             return view('admin.status-sudah',["title"=>"Sudah bayar","pemesanansudah"=>$pemesanansudah]);
         }
     }
@@ -103,15 +110,18 @@ class PemesananController extends Controller
 
     public function pemesanantiket()
     {
-        $pemesanan = Pemesanan::with('penumpang')->with('penumpang.kereta')->with('penumpang.stasiunkereta')->with('penumpang.stasiunkereta.stasiunTo')->with('penumpang.stasiunkereta.stasiunFrom')->with('user')->where('users_id',auth()->user()->id)->get();
+        $pemesanan = Pemesanan::with('penumpang')->with('penumpang.kereta')->with('penumpang.stasiunkereta')->with('penumpang.stasiunkereta.stasiunTo')->with('penumpang.stasiunkereta.stasiunFrom')->with('user')->where('users_id',auth()->user()->id)->where('status','unpaid')->get();
         //$pemesanan = Pemesanan::with('penumpang')->with('penumpang.kereta')->with('penumpang.stasiunkereta')->with('penumpang.stasiunkereta.stasiunTo')->with('penumpang.stasiunkereta.stasiunFrom')->with('user')->where('users_id',auth()->user()->id)->first();
         $title = "Pemesanan Tiket";
-        return view('customer.print-ticket',compact('pemesanan','title'));
+        return view('customer.print-checkout',compact('pemesanan','title'));
     }
-    public function printticket()
+    public function printticket(Request $request)
     {
         //$pdf = Pdf::loadView('admin.');
-        return view('customer.print-ticket',["title"=>"Pemesanan"]);
+        $pemesanan = Pemesanan::with('penumpang')->with('penumpang.kereta')->with('penumpang.stasiunkereta')->with('penumpang.stasiunkereta.stasiunTo')->with('penumpang.stasiunkereta.stasiunFrom')->with('user')->where('users_id',$request->input('user_id'))->get();
+        $title = "Print Tikcet";
+        $pdf = Pdf::loadView('customer.print-ticket',compact('pemesanan','title'));
+        return $pdf->stream('print-ticket.pdf');
 
     }
     public function pembayaran(Request $request)
@@ -125,14 +135,14 @@ class PemesananController extends Controller
         \Midtrans\Config::$isSanitized = true;
         // Set 3DS transaction for credit card to true
         \Midtrans\Config::$is3ds = true;
-        $checkout = Pemesanan::with('penumpang')->with('penumpang.kereta')->with('penumpang.stasiunkereta')->with('penumpang.stasiunkereta.stasiunTo')->with('penumpang.stasiunkereta.stasiunFrom')->with('user')->where("users_id",$request->userid)->get();
+        $checkout = Pemesanan::with('penumpang')->with('penumpang.kereta')->with('penumpang.stasiunkereta')->with('penumpang.stasiunkereta.stasiunTo')->with('penumpang.stasiunkereta.stasiunFrom')->with('user')->where("users_id",$request->userid)->where('status','unpaid')->get();
         $order = Pemesanan::with('user')->where('users_id',auth()->user()->id)->first();
         $harga = 0;
+        $usernamec = "";
         foreach ($checkout as $c) {
             $harga += $c->harga;
+            $usernamec += $c->username;
         }
-      
-            // dd($order->uuid);
         
         $params = array(
             'transaction_details' => array(
@@ -142,6 +152,7 @@ class PemesananController extends Controller
             'customer_details' => array(
                 'first_name' => Auth::user()->first_name,
                 'last_name' => Auth::user()->last_name,
+                'username'=>$usernamec,
                 'email' => Auth::user()->email,
                 'phone' => Auth::user()->phone,
             ),
@@ -156,20 +167,15 @@ class PemesananController extends Controller
     {
         $serverKey = config('midtrans.server_key');
         
-        $hashed = hash('sha12',$request->order_id.$request->status_code.$request->gross_amount.$serverKey);
+        $hashed = hash('sha512',$request->order_id.$request->status_code.$request->gross_amount.$serverKey);
         if($hashed == $request->signature_key){
             if($request->transaction_status == 'capture'){
                 $callback = Pemesanan::where("uuid",$request->order_id)->first();
-                // $callback->update([
-                //     'status'=>'sudah'
-                // ]);
-                $order = Pemesanan::where("users_id",$callback->users_id)->get();
-                foreach($order as $o){ //no foreach
-                    //dd($order[$i]->users_id);
-                    Pemesanan::where("users_id",$o->users_id)->update([
-                        'status'=>'sudah'
-                    ]);
-                }
+                //DB::table('pemesanans')->where('users_id',$callback->users_id)->update(['status'=>'paid']);
+                Pemesanan::where("users_id",$callback->users_id)->update([
+                    'status'=>'paid'
+                ]);
+                return redirect('/ticket-order');
             }
         }
     }

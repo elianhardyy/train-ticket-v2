@@ -44,6 +44,21 @@
                       </div>
                         
                       @endif
+                      <form action="status-sudah" method="get">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="">Awal</label>
+                            <input type="datetime-local" name="awal" id="awal" class="form-control">
+                          </div>
+                          <div class="col-md-3">
+                            <label for="">Akhir</label>
+                            <input type="datetime-local" name="akhir" id="awal" class="form-control">
+                          </div>
+                          <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                          </div>
+                        </div>
+                      </form>
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">
@@ -56,12 +71,14 @@
                               <th>Harga</th>
                               <th>Berangkat</th>
                               <th>Tujuan</th>
+                              <th>Akun Pengguna</th>
                              
                             </tr>
                           </thead>
                           <tbody>
                             @php
                               $no = 1;
+                              $harga = 0;
                             @endphp
                             @foreach ($pemesanansudah as $ps )
                             <tr>
@@ -71,9 +88,7 @@
                               <td>{{ $ps->nomor_kursi }}</td>
                               <td>{{ $ps->gerbong }}</td>
                               <td>Rp {{ number_format($ps->penumpang->kereta->harga) }}</td>
-                             
-                              
-                              
+                              <td>{{ $ps->user->username }}</td>
                             </tr>
                             @endforeach
                            

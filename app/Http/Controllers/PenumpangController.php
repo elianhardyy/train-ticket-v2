@@ -14,7 +14,7 @@ class PenumpangController extends Controller
     //Admin
     public function passangermanage()
     {
-        $pass = Penumpang::with('user')->with('kereta')->with('stasiunkereta.stasiunFrom')->with('stasiunkereta.stasiunTo')->get();
+        $pass = Penumpang::with('user')->with('kereta')->with('stasiunkereta.stasiunFrom')->with('stasiunkereta.stasiunTo')->orderBy('id','desc')->get();
         $kereta = Kereta::all();
         $stasiun = Stasiun::all();
         $passoffline = PemesananOffline::with('kereta')->with('stasiunkereta')->get();
@@ -38,6 +38,9 @@ class PenumpangController extends Controller
             "stasiun_kereta_id"=>"required",
             "kereta_id"=>"required"
         ]);
+        if($penumpang["tanggal_pesan"] == ""){
+            return redirect()->back();
+        }
         $jumpenumpang = $penumpang['dewasa'];
         Penumpang::create($penumpang);
         $characters = 'ABCDE';

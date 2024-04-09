@@ -39,13 +39,13 @@ class ProfileController extends Controller
                     "photo"=>"image|file",
                     "users_id"=>"required"
                 ]);
-                if ($request->file('image')) {
+                if ($request->file('photo')) {
                     if ($request->oldImage) {
                         Storage::delete($request->oldImage);
                     }
-                    $profile['photo'] = $request->file('image')->store('profiles');
+                    $profile['photo'] = $request->file('photo')->store('profiles');
                 }
                 Profile::where('users_id',$param)->update($profile);
-        return redirect("/admin");
+        return redirect("/dashboard");
     }
 }

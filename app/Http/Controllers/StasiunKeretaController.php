@@ -91,6 +91,9 @@ class StasiunKeretaController extends Controller
         $anak = $request->input('anak');
         $dateorder = $request->input('tanggal_pesan');
         $category = $request->input('kategori');
+        if($dateorder == ""){
+            return back();
+        }
         $pem = StasiunKereta::with('kereta')->with('stasiunTo')->with('stasiunFrom')->where('stasiun_from_id',$berangkat)->where('stasiun_to_id',$tujuan)->get();
         $tujuanonly = StasiunKereta::with('kereta')->with('stasiunTo')->where('stasiun_to_id',$tujuan)->first();
         return view('customer.pemberhentian',["title"=>"Pilih Kereta","pem"=>$pem,"tujuan"=>$tujuan,"tujuanonly"=>$tujuanonly,"pass"=> $dewasa,"dateorder"=>$dateorder,"category"=>$category,"anak"=>$anak]);

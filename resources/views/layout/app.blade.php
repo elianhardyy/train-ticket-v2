@@ -13,10 +13,11 @@
     <!-- theme stylesheet-->
     <link rel="stylesheet" href="{{ asset('css/style.default.css') }}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    
+    <link rel="stylesheet" href="{{ asset('css/fontawesome-all.min.css')}}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
+    <script src="https://kit.fontawesome.com/bd20a423ca.js" crossorigin="anonymous"></script>
     <script type="text/javascript"
     src="https://app.sandbox.midtrans.com/snap/snap.js"
     data-client-key="{{ config('midtrans.client_key') }}"></script>

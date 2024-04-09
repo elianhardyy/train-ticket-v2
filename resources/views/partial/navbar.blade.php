@@ -91,7 +91,7 @@
                 <!-- Logout    -->
                 <form action="{{ route('logout') }}" method="post">
                   @csrf
-                <li class="nav-item"><button type="submit" class="nav-link text-white"> <span class="d-none d-sm-inline">Logout</span></button></li>
+                <li class="nav-item"><button type="submit" class="nav-link text-white" style="background-color: black;"> <span class="d-none d-sm-inline">Logout</span></button></li>
                     </form>
               </ul>
             </div>

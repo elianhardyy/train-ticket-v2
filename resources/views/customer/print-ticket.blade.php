@@ -1,78 +1,106 @@
-@extends('layout.app')
-@section('customer')
-<div class="main-content container-fluid">
-          <div class="row">
-            <div class="col-lg-12">
+<link rel="stylesheet" href="{{ asset('css/print.css') }}">
+<section class="row">
+    
+    @foreach ($pemesanan as $p)
+    <div class="ticket">
+		<div class="block">
+			<div class="boarding">
+				<h1>Boarding Pass</h1>
+				<div class="till">
+					<p>Boarding till</p>
+					<span>Boards: {{ $p->penumpang->stasiunkereta->jam_kereta_from }}.</span>
+					<span>Arrives: {{ $p->penumpang->stasiunkereta->jam_kereta_to }}.</span>
+				</div>
+			</div>
+			<div class="content name">
+				<h3>Name Of Passenger</h3>
+				<p>{{ $p->username }}</p>
+			</div>
+			<div class="content from">
+				<h3>From</h3>
+				<p>{{ $p->penumpang->stasiunkereta->stasiunFrom->nama_stasiun }}</p>
+			</div>
+			<div class="content to">
+				<div class="to-m">
+					<h3>To</h3>
+					<p>{{ $p->penumpang->stasiunkereta->stasiunTo->nama_stasiun }}</p>
+				</div>
 
-            <!--Train Details-->
-              <div id='printReceipt' class="invoice">
-                <div class="row invoice-header">
-                  <div class="col-sm-7">
-                    <div class="invoice-logo"></div>
-                  </div>
-                  <div class="col-sm-5 invoice-order"><span class="invoice-id">Train Ticket For</span><span class="incoice-date">Depan Belakang </span></div>
-                </div>
-                <div class="row invoice-data">
-                  <div class="col-sm-5 invoice-person"><span class="name">Depan Belakang</span><span>{{ auth()->user()->email }} - {{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span></div>
-                  <div class="col-sm-2 invoice-payment-direction"></div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <table class="table table-bordered" >
-                    <thead>
-                      <tr>
-                        <th>Train Number</th>
-                        <th>Train</th>
-                        <th>Departure</th>
-                        <th>Arrival</th>
-                        <th>Dep.Time</th>
-                        <th>Fare</th>
-                        <th>Fare</th>
-                        <th>Fare</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @php
-                        $harga = 0;
-                      @endphp
-                       @foreach ($pemesanan as $p)
-                       <tr>
-                         <td>{{ $p->penumpang->kereta->nama_kereta }}</td>
-                         <td>{{ number_format($p->harga) }}</td>
-                         <td>{{ $p->penumpang->stasiunkereta->stasiunFrom->nama_stasiun }}</td>
-                         <td>{{ $p->penumpang->stasiunkereta->stasiunTo->nama_stasiun }}</td>
-                         <td>{{ $p->user->first_name }}</td>
-                         <td>{{ $p->penumpang->stasiunkereta->jam_kereta_from }}</td>
-                         <td>{{ $p->penumpang->stasiunkereta->jam_kereta_to }}</td>
-                         <td>{{ $p->penumpang->tanggal_pesan }}</td>
-                       </tr>
-                        @php
-                          $harga+= $p->harga
-                        @endphp
-                      
-                       @endforeach
-                      <hr>
-                    </tbody>
-                    </table>
-                    <h4>Rp {{ number_format($harga) }}</h4>
-                  </div>
-                </div>
-              </div>
-              <hr>
-              <div class="row invoice-footer">
-                  <div class="col-lg-12">
-                    <button id="print" onclick="printContent('printReceipt');" class="btn btn-lg btn-space btn-primary">Print</button>
-                  </div>
-                  <div class="col-md-3">
-                      <form action="{{ route('checkout') }}" method="post">
-                        @csrf
-                        <input type="hidden" name="userid" value="{{ auth()->user()->id }}">
-                        <button class="btn btn-secondary">Bayar</button>
-                      </form>
-                  </div>
-              </div>
-              
-            </div>
-          </div>
-        </div>
-@endsection
+				<div class="airline">
+					{{ $p->penumpang->kereta->nama_kereta }}
+				</div>
+			</div>
+			<div class="scan">
+				<img src="https://chart.googleapis.com/chart?cht=qr&chl=UA%201136%2098745-34538459&chs=180x180&choe=UTF-8&chld=L|2" alt="">
+			</div>
+		</div>
+
+		<div class="section-2">
+			<div class="gate">
+				<h3>Gate</h3>
+				<p>B3</p>
+			</div>
+			<div class="flight">
+				<h3>Flight</h3>
+				<p>2005</p>
+			</div>
+			<div class="seat">
+				<h3>Seat</h3>
+				<p>{{ $p->gerbong }}{{ $p->huruf_kursi }}</p>
+			</div>
+			<div class="group">
+				<h3>Group</h3>
+				<p>{{ $p->penumpang->kereta->kelas }}</p>
+			</div>
+		</div>
+
+		<div class="left-side">
+			<div class="airline">
+				{{ $p->penumpang->kereta->nama_kereta }}
+			</div>
+			<div class="name">
+				<h3>Name Of Passenger</h3>
+				<p>{{ $p->username }}</p>
+			</div>
+			<div class="from">
+				<h3>From</h3>
+				<p>{{ $p->penumpang->stasiunkereta->stasiunFrom->nama_stasiun }}</p>
+			</div>
+			<div class="from">
+				<div class="to-m">
+					<h3>To</h3>
+					<p>{{ $p->penumpang->stasiunkereta->stasiunTo->nama_stasiun }}</p>
+				</div>
+			</div>
+
+			<div class="section-2">
+				<div class="gate">
+					<h3>Gate</h3>
+					<p>B3</p>
+				</div>
+				<div class="flight">
+					<h3>Flight</h3>
+					<p>2005</p>
+				</div>
+				<div class="seat">
+					<h3>Seat</h3>
+					<p>{{ $p->gerbong }}{{ $p->huruf_kursi }}</p>
+				</div>
+				<div class="group">
+					<h3>Group</h3>
+					<p>{{ $p->penumpang->kereta->kelas }}</p>
+				</div>
+			</div>
+
+			<div class="time">
+				<p>Boarding till</p>
+				<span>Boards: {{ $p->penumpang->stasiunkereta->jam_kereta_from }}</span>
+				<span>Arrives: {{ $p->penumpang->stasiunkereta->jam_kereta_to }}</span>
+			</div>
+		</div>
+	</div>
+    <br>
+    @endforeach
+
+</section>
+    

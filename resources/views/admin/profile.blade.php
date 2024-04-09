@@ -58,11 +58,11 @@
                         <form action="{{ route('profilepost') }}" method="post" id="profile-form" enctype="multipart/form-data" class="photo-profile">
                             @csrf
                             <input type="hidden" name="users_id" value="{{ auth()->user()->id }}">
-                            <input type="file" name="photo" id="file" class="img-file" id="img-file" onchange="previewImage()"> {{-- onchange --}}
+                            <input type="file" name="photo" class="img-file" id="img-file" onchange="previewImage()" hidden> {{-- onchange --}}
                             
                             <img src="{{ asset('img/rabu.jpg') }}" alt="llala" class="img-profile">
                             <div class="middle" id="middle"> {{-- onchange --}}
-                                <div class="text"><i class="fa-solid fa-camera"></i></div>
+                                <div class="text-photo"><i class="fa-solid fa-camera"></i></div>
                             </div>
                             <button type="submit">Submit Post</button>
                         </form> 
@@ -71,11 +71,11 @@
                             @csrf
                             @method('put')
                             <input type="hidden" name="users_id" value="{{ auth()->user()->id }}">
-                            <input type="file" name="photo" id="file" class="img-file" id="img-file" onchange="previewImage()"> {{-- onchange --}}
+                            <input type="file" name="photo" class="img-file" id="img-file" onchange="previewImage()" hidden> {{-- onchange --}}
                             <input type="hidden" name="oldImage" value="{{ $profile->photo }}">
                             <img src="{{ asset('storage/'.$profile->photo)}}" alt="llala" class="img-profile">
                             <div class="middle" id="middle"> {{-- onchange --}}
-                                <div class="text"><i class="fa-solid fa-camera"></i></div>
+                                <div class="text-photo"><i class="fa-solid fa-camera"></i></div>
                             </div>
                             <button type="submit">Submit Edit</button>
                         </form>
@@ -123,9 +123,16 @@
     var middle = document.querySelector('#middle')
     var imgFile = document.querySelector('#img-container')
 
-    middle.addEventListener("click",()=>{
-        imgFile.click();
+    var imgFile = document.querySelector(".img-file")
+    var imgProfile = document.querySelector(".img-profile")
+    var textPhoto = document.querySelector(".middle")
+    textPhoto.addEventListener("click",()=>{
+        imgFile.click()
     })
+    
+    // middle.addEventListener("click",()=>{
+    //     imgFile.click();
+    // })
     imgFile.onchange = (e)=>{
         e.target.files[0];
     }
@@ -135,10 +142,19 @@
 @endsection
 @push('js_scripts')
     <script>
-        function previewImage(){
-    var imgFile = document.querySelector("#img-file")
+         var imgFile = document.querySelector(".img-file")
     var imgProfile = document.querySelector(".img-profile")
-
+    var textPhoto = document.querySelector(".middle")
+    textPhoto.addEventListener("click",()=>{
+        imgFile.click()
+    })
+        function previewImage(){
+    var imgFile = document.querySelector(".img-file")
+    var imgProfile = document.querySelector(".img-profile")
+    var textPhoto = document.querySelector(".middle")
+    textPhoto.addEventListener("click",()=>{
+        imgFile.click()
+    })
     const reader = new FileReader();
 
     reader.readAsDataURL(imgFile.files[0])
